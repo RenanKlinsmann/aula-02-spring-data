@@ -16,7 +16,6 @@ public class ProdutoServico {
 	private ProdutoRepositorioJPA produtoRepositorioJPA;
 	
 	public Produto insert(Produto produto) {
-		/*List<Produto> teste = produtoRepositorioJPA.findAll();*/
 		return produtoRepositorioJPA.save(produto);
 		
 	}
@@ -34,6 +33,16 @@ public class ProdutoServico {
 	
 	public void delete(Integer id) {
 		produtoRepositorioJPA.deleteById(id);
+	}
+	
+	public Optional<Produto> findByIdPrecoJpql(Integer id, Double preco) {
+		return produtoRepositorioJPA.findProdutoParam(id, preco);
+		
+	}
+	
+	public Optional<Produto> findByIdPrecoSql(Integer id, Double preco) {
+		return produtoRepositorioJPA.findProdutoParamSql(id, preco);
+		
 	}
 	
 

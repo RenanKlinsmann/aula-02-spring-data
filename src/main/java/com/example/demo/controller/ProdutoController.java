@@ -62,5 +62,19 @@ public class ProdutoController {
 							 : new ResponseEntity<>("Erro ao deletar produto", HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	@GetMapping("/produto-jpa-id-preco-jpql/{id}/{preco}")
+	public ResponseEntity<Optional<Produto>> findByIdPrecoJpql(@PathVariable Integer id, @PathVariable Double preco){
+		Optional<Produto> prod = servico.findByIdPrecoJpql(id, preco);
+		return prod.isPresent() ?  new ResponseEntity<>(prod, HttpStatus.OK) 
+							    : new ResponseEntity<>(prod, HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("/produto-jpa-id-preco-sql/{id}/{preco}")
+	public ResponseEntity<Optional<Produto>> findByIdPrecoSql(@PathVariable Integer id, @PathVariable Double preco){
+		Optional<Produto> prod = servico.findByIdPrecoSql(id, preco);
+		return prod.isPresent() ?  new ResponseEntity<>(prod, HttpStatus.OK) 
+							    : new ResponseEntity<>(prod, HttpStatus.BAD_REQUEST);
+	}
 
 }
