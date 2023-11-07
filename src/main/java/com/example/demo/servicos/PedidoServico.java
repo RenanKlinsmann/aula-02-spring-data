@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dtos.PedidoDTO;
+import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entidades.Pedido;
+import com.example.demo.entidades.Produto;
 import com.example.demo.repositorio.PedidoRepositorioJpa;
+import com.example.demo.repositorio.ProdutoRepositorioJPA;
 
 @Service
 public class PedidoServico {
@@ -18,9 +21,21 @@ public class PedidoServico {
 	@Autowired
 	private PedidoRepositorioJpa repository;
 	
+	@Autowired
+	private ProdutoRepositorioJPA produtoRepositorioJPA;
 	
-	public Pedido insert(Pedido pedido) {
-		return repository.save(pedido);
+	
+	@Transactional
+	public PedidoDTO insert(PedidoDTO pedido) {
+		Pedido ped = new Pedido(pedido.getEndereco());
+		
+		for(ProdutoDTO p : pedido.getProdutos()) {
+			Produto produto = produtoRepositorioJPA.getReferenceById(p.getId());
+			ped.getProdutos().add(produto);
+		}
+		
+		ped = repository.save(ped);
+		return new PedidoDTO(ped);
 		
 	}
 	

@@ -37,6 +37,10 @@ public class Pedido implements Serializable {
 		this.id = id;
 		this.endereco = endereco;
 	}
+	
+	public Pedido(String endereco) {
+		this.endereco = endereco;
+	}
 
 	public Integer getId() {
 		return id;

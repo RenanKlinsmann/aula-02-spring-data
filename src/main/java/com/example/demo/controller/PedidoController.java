@@ -26,8 +26,8 @@ public class PedidoController {
 	private PedidoServico servico;
 	
 	@PostMapping
-	public ResponseEntity<String> insert(@RequestBody Pedido pedido){
-		Pedido prod = servico.insert(pedido);
+	public ResponseEntity<String> insert(@RequestBody PedidoDTO pedido){
+		PedidoDTO prod = servico.insert(pedido);
 		return prod !=  null ? new ResponseEntity<>("Pedido criado com sucesso", HttpStatus.CREATED) : new ResponseEntity<>("Erro ao criar produto", HttpStatus.BAD_REQUEST);
 		
 	}
