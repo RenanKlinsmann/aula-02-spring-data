@@ -2,10 +2,12 @@ package com.example.demo.servicos;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entidades.Produto;
 import com.example.demo.repositorio.ProdutoRepositorioJPA;
 
@@ -15,14 +17,16 @@ public class ProdutoServico {
 	@Autowired
 	private ProdutoRepositorioJPA produtoRepositorioJPA;
 	
-	public Produto insert(Produto produto) {
-		return produtoRepositorioJPA.save(produto);
+	public ProdutoDTO insert(ProdutoDTO produto) {
+		Produto prod = new Produto(produto.getId(), produto.getNome(), produto.getPreco());	
+		return new ProdutoDTO(produtoRepositorioJPA.save(prod));
 		
 	}
 	
 	
-	public List<Produto> findAll() {
-		return produtoRepositorioJPA.findAll();
+	public List<ProdutoDTO> findAll() {
+		List<Produto> list = produtoRepositorioJPA.findAll();
+		return list.stream().map(x -> new ProdutoDTO(x)).collect(Collectors.toList());
 		
 	}
 	

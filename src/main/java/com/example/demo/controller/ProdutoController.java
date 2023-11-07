@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entidades.Produto;
 import com.example.demo.servicos.ProdutoServico;
 
@@ -26,15 +27,16 @@ public class ProdutoController {
 	private ProdutoServico servico;
 	
 	@PostMapping
-	public ResponseEntity<String> insert(@RequestBody Produto produto){
-		Produto prod = servico.insert(produto);
-		return prod !=  null ? new ResponseEntity<>("Produto criado com sucesso", HttpStatus.CREATED) : new ResponseEntity<>("Erro ao criar produto", HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> insert(@RequestBody ProdutoDTO produto){
+		ProdutoDTO prod = servico.insert(produto);
+		return prod !=  null ? new ResponseEntity<>("Produto criado com sucesso", HttpStatus.CREATED) 
+				: new ResponseEntity<>("Erro ao criar produto", HttpStatus.BAD_REQUEST);
 		
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Produto>> findAll(){
-		List<Produto> list = servico.findAll();
+	public ResponseEntity<List<ProdutoDTO>> findAll(){
+		List<ProdutoDTO> list = servico.findAll();
 		return !list.isEmpty() ?  new ResponseEntity<>(list, HttpStatus.OK) 
 							   : new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
 	}
@@ -47,8 +49,8 @@ public class ProdutoController {
 	}
 	
 	@PutMapping("/produto-update")
-	public ResponseEntity<String> update(@RequestBody Produto produto){
-		Produto prod = servico.insert(produto);
+	public ResponseEntity<String> update(@RequestBody ProdutoDTO produto){
+		ProdutoDTO prod = servico.insert(produto);
 		return prod !=  null ? new ResponseEntity<>("Produto atualizado com sucesso", HttpStatus.OK) 
 							 : new ResponseEntity<>("Erro ao atualizar produto", HttpStatus.BAD_REQUEST);
 		
